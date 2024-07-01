@@ -1,0 +1,18 @@
+# cloud-init for basic Ubuntu node setup
+
+# Basic user
+
+# Update the package list and upgrade all packages
+package_update: true
+package_upgrade: true
+packages:
+  - git
+
+users:
+  - name: sysadmin 
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin, sudo
+    home: /home/sysadmin
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ${file("~/.ssh/google_compute_engine.pub")

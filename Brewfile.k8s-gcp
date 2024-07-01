@@ -1,0 +1,2 @@
+brew "hashicorp/tap/terraform"
+cask "google-cloud-sdk"
