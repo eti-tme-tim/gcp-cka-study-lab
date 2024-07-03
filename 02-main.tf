@@ -51,8 +51,20 @@ resource "google_compute_firewall" "allow_internal" {
   source_ranges = [var.vpc_cidr_range]
 }
 
+resource "google_compute_firewall" "allow_gcp_iap" {
+  name    = "allow-gcp-iap"
+  network = google_compute_network.vpc_network.name
+
+  allow {
+    protocol = "tcp"
+    ports    = ["22"]
+  }
+
+  source_ranges = ["35.235.240.0/20"]
+}
+
 resource "google_compute_instance" "vm_instance" {
-  count        = 3
+  count        = length(var.instance_names)
   name         = "${var.instance_names[count.index]}"
   machine_type = var.machine_type
 
